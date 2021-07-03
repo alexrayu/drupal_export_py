@@ -66,7 +66,7 @@ for key in data:
 
     # field_firma_homepage
     value = drupal.field_values(cursor, nid, 'field_firma_homepage', 'uri')
-    if value is not None: node['homepage'] = value
+    if value is not None: node['website'] = value
 
     # field_firma_kontaktpersonen
     value = drupal.field_values(cursor, nid, 'field_firma_kontaktpersonen', 'target_id')
