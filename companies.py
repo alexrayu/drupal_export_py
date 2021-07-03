@@ -66,12 +66,59 @@ for key in data:
 
     # field_firma_homepage
     value = drupal.field_values(cursor, nid, 'field_firma_homepage', 'uri')
-    if value is not None: node['website'] = value
+    if value is not None: node['homepage'] = value
 
     # field_firma_kontaktpersonen
     value = drupal.field_values(cursor, nid, 'field_firma_kontaktpersonen', 'target_id')
     if value is not None: node['contacts'] = value
 
+    # field_firma_land
+    value = drupal.field_values(cursor, nid, 'field_firma_land')
+    if value is not None: node['country'] = value
+
+    # field_firma_logos
+    value = drupal.image_field_values(cursor, nid, 'field_firma_logos')
+    if value is not None: node['logos'] = value
+
+    # field_firma_namenszusatzzeile
+    value = drupal.field_values(cursor, nid, 'field_firma_namenszusatzzeile')
+    if bool(value): node['slogan'] = value
+
+    # field_firma_niederlassungen
+    value = drupal.terms_field_values(cursor, nid, 'field_firma_niederlassungen')
+    if value is not None: node['offices'] = value
+
+    # field_firma_notizen
+    value = drupal.field_values(cursor, nid, 'field_firma_notizen')
+    if bool(value): node['notes'] = value
+
+    # field_firma_ort
+    value = drupal.field_values(cursor, nid, 'field_firma_ort')
+    if bool(value): node['city'] = value
+
+    # field_firma_postleitzahl
+    value = drupal.field_values(cursor, nid, 'field_firma_postleitzahl')
+    if bool(value): node['zip'] = value
+
+    # field_firma_postleitzahl
+    value = drupal.field_values(cursor, nid, 'field_firma_postleitzahl')
+    if bool(value): node['zip'] = value
+
+    # field_firma_rubriken
+    value = drupal.terms_field_values(cursor, nid, 'field_firma_rubriken')
+    if value is not None: node['categories'] = value
+
+    # field_firma_shortlink
+    value = drupal.field_values(cursor, nid, 'field_firma_shortlink')
+    if bool(value): node['shortlink'] = value
+
+    # field_firma_strasse
+    value = drupal.field_values(cursor, nid, 'field_firma_strasse')
+    if bool(value): node['street'] = value
+
+    # field_firma_telefon
+    value = drupal.field_values(cursor, nid, 'field_firma_telefon')
+    if bool(value): node['phone'] = value
 
     data[key] = node
 
