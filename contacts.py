@@ -2,20 +2,7 @@
 
 from json import dump
 from mysql.connector import (connection)
-
-
-# Fetch a single text row value (will fetch first if many found).
-def fetch_text(nid, field_name):
-    table = 'node__' + field_name
-    row = field_name + '_value'
-    query = 'SELECT ' + row + ' FROM ' + table + ' WHERE entity_id=' + str(nid)
-    cursor.execute(query, nid)
-    value = cursor.fetchone()
-    if isinstance(value, (tuple, list)) and len(value) < 2:
-        value = value[0]
-    if isinstance(value, str):
-        value = str(value).strip()
-    return value
+import export_drupal as drupal
 
 
 cnx = connection.MySQLConnection(user='drupal', password='drupal',
@@ -41,22 +28,28 @@ for key in data:
     nid = node['nid']
 
     # body
-    node['body'] = fetch_text(nid, 'body')
+    value = drupal.field_values(cursor, nid, 'body')
+    if value is not None: node['body'] = value
 
     # field_kontaktperson_vorname
-    node['first_name'] = fetch_text(nid, 'field_kontaktperson_vorname')
+    value = drupal.field_values(cursor, nid, 'field_kontaktperson_vorname')
+    if value is not None: node['first_name'] = value
 
     # field_kontaktperson_nachname
-    node['second_name'] = fetch_text(nid, 'field_kontaktperson_nachname')
+    value = drupal.field_values(cursor, nid, 'field_kontaktperson_nachname')
+    if value is not None: node['second_name'] = value
 
     # field_kontaktperson_titel
-    node['formal_address'] = fetch_text(nid, 'field_kontaktperson_titel')
+    value = drupal.field_values(cursor, nid, 'field_kontaktperson_titel')
+    if value is not None: node['formal_address'] = value
 
     # field_kontaktperson_telefon
-    node['phone'] = fetch_text(nid, 'field_kontaktperson_telefon')
+    value = drupal.field_values(cursor, nid, 'field_kontaktperson_telefon')
+    if value is not None: node['phone'] = value
 
     # field_kontaktperson_email
-    node['phone'] = fetch_text(nid, 'field_kontaktperson_email')
+    value = drupal.field_values(cursor, nid, 'field_kontaktperson_email')
+    if value is not None: node['phone'] = value
 
     data[key] = node
 
