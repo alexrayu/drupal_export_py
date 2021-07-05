@@ -9,15 +9,16 @@ cnx = connection.MySQLConnection(user='drupal', password='drupal',
                                  host='127.0.0.1',
                                  database='ere-src')
 cursor = cnx.cursor()
-query = 'SELECT nid, title, created, changed, langcode FROM node_field_data WHERE type="svg_kontaktperson" AND status=1'
+query = 'SELECT nid, title, status, created, changed, langcode FROM node_field_data WHERE type="svg_kontaktperson"'
 cursor.execute(query)
 data = {}
 
 # Main node data.
-for (nid, title, created, changed, langcode) in cursor:
+for (nid, title, status, created, changed, langcode) in cursor:
     data[nid] = {
         'nid': nid,
         'title': title,
+        'status': status,
         'created': created,
         'changed': changed,
         'langcode': langcode
@@ -49,7 +50,7 @@ for key in data:
 
     # field_kontaktperson_email
     value = drupal.field_values(cursor, nid, 'field_kontaktperson_email')
-    if value is not None: node['phone'] = value
+    if value is not None: node['email'] = value
 
     data[key] = node
 
