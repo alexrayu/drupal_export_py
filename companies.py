@@ -3,6 +3,8 @@
 from json import dump
 from mysql.connector import (connection)
 import export_drupal as drupal
+import contacts
+
 
 
 cnx = connection.MySQLConnection(user='drupal', password='drupal',
@@ -33,14 +35,6 @@ for key in data:
     value = drupal.field_values(cursor, nid, 'body')
     if value is not None: node['body'] = value
 
-    # field_cka_aid
-    value = drupal.field_values(cursor, nid, 'field_cka_aid')
-    if value is not None: node['cka_aid'] = value
-
-    # field_cka_oid
-    value = drupal.field_values(cursor, nid, 'field_cka_oid')
-    if value is not None: node['cka_oid'] = value
-
     # field_firma_bildergalerie
     value = drupal.image_field_values(cursor, nid, 'field_firma_bildergalerie')
     if value is not None: node['gallery'] = value
@@ -70,8 +64,9 @@ for key in data:
     if value is not None: node['website'] = value
 
     # field_firma_kontaktpersonen
-    value = drupal.field_values(cursor, nid, 'field_firma_kontaktpersonen', 'target_id')
-    if value is not None: node['contacts'] = value
+    target_id = drupal.field_values(cursor, nid, 'field_firma_kontaktpersonen', 'target_id')
+    value = contacts.contactData(target_id)
+    if value is not None: node['contact'] = value
 
     # field_firma_land
     value = drupal.field_values(cursor, nid, 'field_firma_land')
@@ -130,9 +125,6 @@ for key in data:
     if bool(value): node['publish_to'] = value
 
     data[key] = node
-
-
-# Get the email.
 
 
 cursor.close()
