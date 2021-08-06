@@ -35,10 +35,6 @@ for key in data:
     value = drupal.field_values(cursor, nid, 'body')
     if value is not None: node['body'] = value
 
-    # field_firma_bildergalerie
-    value = drupal.image_field_values(cursor, nid, 'field_firma_bildergalerie')
-    if value is not None: node['gallery'] = value
-
     # field_firma_branchen
     value = drupal.terms_field_values(cursor, nid, 'field_firma_branchen')
     if value is not None: node['sectors'] = value
@@ -92,9 +88,9 @@ for key in data:
     value = drupal.field_values(cursor, nid, 'field_firma_ort')
     if bool(value): node['city'] = value
 
-    # field_firma_postleitzahl
-    value = drupal.field_values(cursor, nid, 'field_firma_postleitzahl')
-    if bool(value): node['zip'] = value
+    # field_firma_hausnummer
+    value = drupal.field_values(cursor, nid, 'field_firma_hausnummer')
+    if bool(value): node['house_nr'] = value
 
     # field_firma_postleitzahl
     value = drupal.field_values(cursor, nid, 'field_firma_postleitzahl')
