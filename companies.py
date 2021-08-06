@@ -124,8 +124,11 @@ for key in data:
     value = drupal.field_values(cursor, nid, 'field_firma_veroeffentlichen_bis')
     if bool(value): node['publish_to'] = value
 
-    data[key] = node
+    # path_alias
+    value = drupal.path_alias(cursor, nid)
+    if bool(value): node['path_alias'] = value
 
+    data[key] = node
 
 cursor.close()
 cnx.close()

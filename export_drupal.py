@@ -98,3 +98,11 @@ def terms_field_values(cursor, nid, field_name):
             result[value[0]]['name'] = term_values[2]
 
     return result
+
+
+# Fetch path alias by node id.
+def path_alias(cursor, nid):
+    query = f'SELECT alias FROM path_alias WHERE path="/node/{nid}"'
+    cursor.execute(query)
+    values = cursor.fetchone()
+    return values[0] if len(values) else None
