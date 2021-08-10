@@ -2,7 +2,7 @@
 # Alexei Raiu, 2021
 
 # Fetch a row values by node id.
-def field_values(cursor, nid, field_name, suffix='value'):
+def field_values(cursor, nid, field_name, suffix='value', single=False):
     table = 'node__' + field_name
     row = field_name + '_' + suffix
     query = 'SELECT ' + row + ' FROM ' + table + ' WHERE entity_id=' + str(nid)
@@ -17,12 +17,17 @@ def field_values(cursor, nid, field_name, suffix='value'):
                     values[key] = value[0]
                 else:
                     values[key] = value
-    if isinstance(values, (tuple, list)):
+    if single and isinstance(values, (tuple, list)):
         if len(values) < 2:
             values = values[0]
     if isinstance(values, str):
         values = str(values).strip()
     return values
+
+
+# Wrapper for field_values, for a single value.
+def field_value(cursor, nid, field_name, suffix='value', single=False):
+    return field_values(cursor, nid, field_name, suffix, single=True)
 
 
 # Fetch a single text row value (will fetch first if many found).
