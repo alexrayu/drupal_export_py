@@ -62,11 +62,11 @@ for key in data:
     # field_firma_kontaktpersonen
     target_ids = drupal.field_values(cursor, nid, 'field_firma_kontaktpersonen', 'target_id') or []
     if len(target_ids):
-        results = {}
+        results = []
         for target_id in target_ids:
             value = contacts.contactData(target_id)
             if len(value):
-                results[target_id] = value
+                results.append(value)
         if len(results) is not None: node['contacts'] = results
 
     # field_firma_land
